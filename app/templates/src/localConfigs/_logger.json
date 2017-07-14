@@ -1,0 +1,23 @@
+{
+  "PROD": {
+    "name": "<%= name %>",
+    "src":false,
+    "streams": [],
+    "console-log": false,
+    "level" : "error"
+  },
+  "DEV": {
+    "name": "<%= name %>",
+    "src":false,
+    "streams": [],
+    "console-log": true,
+    "level" : "error"
+  },
+  "LOCAL": {
+    "name": "<%= name %>",
+    "src":false,
+    "streams": [],
+    "console-log": true,
+    "level" : "trace"
+  }
+}

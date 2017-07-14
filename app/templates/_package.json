@@ -1,0 +1,99 @@
+{
+  "name": "<%= name %>",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "quick-start": "NODE_ENV='LOCAL' node dist/server.js",
+    "build": "npm run clean && npm run express:build",
+    "build:watch": "npm-watch express:build",
+    "start": "npm run build && npm run quick-start",
+    "start:watch": "npm-watch express",
+    "express:build": "npm install && gulp babel-source-maps",
+    "express:build:watch": "npm-watch express:build",
+    "express": "npm run express:build && npm run quick-start",
+    "express:watch": "npm-watch express",
+    "eslint": "eslint 'src/**/*.js'",
+    "eslint-test": "eslint 'tests/**/*.js' --fix",
+    "eslint-fix": "eslint 'src/**/*.js' --fix",
+    "lint-staged": "lint-staged",
+    "git-uncommited-changes": "git diff --quiet --cached",
+    "git-unstaged-changes": "git diff --quiet",
+    "git-branch": "bash git-hooks/branch.sh",
+    "esdoc": "esdoc",
+    "clean": "rm -rf dist/",
+    "test:node": "NODE_ENV='TEST' mocha --compilers js:babel-core/register --reporter spec  --timeout 10000 --recursive ",
+    "test": "npm run test:node"
+  },
+  "watch": {
+    "express": {
+      "patterns": [
+        "src/app/**/*",
+        "src/utils/**/*",
+        "src/*"
+      ],
+      "extensions": "js",
+      "quiet": true
+    },
+    "express:build": {
+      "patterns": [
+        "src/app/**/*",
+        "src/utils/**/*",
+        "src/app.js",
+        "src/daemon.js",
+        "src/server.js"
+      ],
+      "extensions": "js",
+      "quiet": true
+    },
+    "quick-start": {
+      "patterns": [
+        "dist/**/*"
+      ],
+      "extensions": "js",
+      "quiet": true
+    }
+  },
+  "dependencies": {
+    "body-parser": "~1.16.0",
+    "bunyan": "^1.8.5",
+    "bunyan-format": "^0.2.1",
+    "express": "~4.14.1",
+    "mocha": "^3.2.0",
+    "unirest": "^0.5.1"
+  },
+  "devDependencies": {
+    "babel-preset-node6": "^11.0.0",
+    "babili": "0.0.11",
+    "chai": "^3.5.0",
+    "esdoc": "^0.5.2",
+    "eslint": "^3.19.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "lint-staged": "^3.3.1",
+    "npm-watch": "^0.1.9",
+    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1",
+    "pump": "latest",
+    "source-map-support": "latest"
+  },
+  "pre-push": [
+    "eslint",
+    "git-unstaged-changes",
+    "git-uncommited-changes",
+    "git-branch",
+    "test"
+  ],
+  "pre-commit": [
+    "git-branch",
+    "lint-staged"
+  ],
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
